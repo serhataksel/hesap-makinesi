@@ -1,3 +1,5 @@
+let historyLog = [];
+
 function appendToResult(value) {
     document.getElementById("result").value += value;
 }
@@ -7,10 +9,19 @@ function clearResult() {
 }
 
 function calculateResult() {
+    const resultField = document.getElementById("result");
+    const expression = resultField.value;
     try {
-        let result = eval(document.getElementById("result").value);
-        document.getElementById("result").value = result;
+        let result = eval(expression);
+        resultField.value = result;
+        updateHistory(expression + ' = ' + result);
     } catch (error) {
-        document.getElementById("result").value = "Hata";
+        resultField.value = "Hata";
     }
+}
+
+function updateHistory(entry) {
+    historyLog.push(entry);
+    const historyField = document.getElementById("history");
+    historyField.innerHTML = historyLog.join('<br>');
 }
